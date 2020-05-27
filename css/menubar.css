@@ -1,0 +1,77 @@
+ul#topnav {
+  margin: 0; padding: 0;
+  float: left;
+  width: 100%;
+  list-style: none;
+  position: relative; /*--Set relative positioning on the unordered list itself - not on the list item--*/
+  font-size: 1.2em;
+  background-color: rgb(53, 52, 44);
+  /* background: url(topnav_stretch.gif) repeat-x; */
+ }
+ ul#topnav li {
+   text-align: center;
+  box-sizing: border-box;
+  width: 20%;
+  float: left;
+  margin: 0; padding: 0;
+  border-right: 1px solid #555; /*--Divider for each parent level links--*/
+ }
+ ul#topnav li a {
+  font-weight: bold;                  
+  font-family: "Trebuchet MS", Dotum; 
+  /* text-align: center; */
+  padding: 10px 15px;
+  /* display: inline-block; */
+  color: #f0f0f0;
+  text-decoration: none;
+  vertical-align: middle;
+ }
+ ul#topnav li:hover { background-color: lightgrey; }
+ 
+ ul#topnav li span {
+  padding: 15px 0;
+  position: absolute;
+  display: none; /*--Hide by default--*/
+  width: 30%;
+  background-color: rgb(57, 64, 71);
+  color: #fff;
+ }
+
+
+ ul#topnav li:hover span { display: block; font-weight: bold;                  
+  font-family: "Trebuchet MS", Dotum; } /*--Show subnav on hover--*/
+ ul#topnav li span a { text-align: center;  display: inline; } /*--Since we declared a link style on the parent list link, we will correct it back to its original state--*/
+ ul#topnav li span a:hover {text-decoration: underline;}
+ 
+/* 
+
+ <ul id="topnav">
+ <li><a href="index.php">HOME</a></li>
+ <li>
+     <a href="#">게시판</a>
+     <!--Subnav Starts Here-->
+     <span class="subnav1">
+         <a href="board_list.php">게시판1</a> |
+         <a href="board_list2.php">게시판2</a> |
+     </span>
+     <!--Subnav Ends Here-->
+ </li>
+ <li>
+     <a href="#">Link</a>
+     <!--Subnav Starts Here-->
+     <span class="subnav2">
+         <a href="#">Subnav Link</a> |
+         <a href="#">Subnav Link</a> |
+         <a href="#">Subnav Link</a>
+     </span>
+     <!--Subnav Ends Here-->
+ </li>
+ <li><a href="#">쪽지함</a>
+ <span class="subnav2">
+         <a href="message_box.php?mode=rv">수신 쪽지함</a> |
+         <a href="message_box.php?mode=send">송신 쪽지함</a> |
+     </span>
+
+ </li>
+ <li><a href="">미정</a></li>
+</ul> */
