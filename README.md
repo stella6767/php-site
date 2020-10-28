@@ -62,7 +62,7 @@ CREATE TABLE `comment` (  //새로 만든 코멘트 데이터 테이블
 
 
 1. 드롭다운 수평메뉴바 구현
-
+```
 <nav id="topMenu" > 
     <ul> 
         <li class="topMenuLi"> 
@@ -96,12 +96,12 @@ CREATE TABLE `comment` (  //새로 만든 코멘트 데이터 테이블
             </ul> 
         </nav>
 
-
+```
 
 
 
 기존 존재하던 header 코드에 메뉴창 코드를 작성해준다. 각각의 메뉴바에 css를 적용시키기 위해 class id 명을 따로 지정해주었다. <href="#" > 메뉴를 클릭할 때 아무런 반응도 일어나지 않도록 설정하고 target="_blank"로 새 창 띄우기는 링크 메뉴판에 만들었다. 이후 메뉴바에 관한 css 작성하였다.
-
+```
 <style type="text/css">
     #topMenu {
             height: 50px;  
@@ -187,14 +187,14 @@ CREATE TABLE `comment` (  //새로 만든 코멘트 데이터 테이블
         background-color: #dddddd;  
     }
     </style>
-
+```
 메뉴 창마다 하위메뉴가 떠오르는 위치를 다르게 지정해주다보니 코드가 전체적으로 길어졌다. 원래는 css 파일을 따로 지정해주어서 연결시키려하였는데 도중에 오류가 자꾸 떠서 <header.php> 파일에 따로 스타일 시트를 만들었다. 전체 설명은 주석으로 대체한다.
 
 
                    <메뉴판에 마우스오버하면 하위메뉴창이 뜬다>
 
 2. 검색 창 구현
- 
+ ```
         <form method=GET name=frm1 action='board_list.php' id="search">
             <select name=kind>
             <option value=subject selected>제목
@@ -204,11 +204,11 @@ CREATE TABLE `comment` (  //새로 만든 코멘트 데이터 테이블
             <input type=text size=30 name=search>
             <input type=button name=byn1 onclick="search1()" value="검색">
         </form>
-               
+ ```              
 기존에 다운받은 php 코드 중 board_list.php 부분에 검색창 기능을 하는 form 문 코드 작성
 option value는 제목 선택으로 고정해놓고 이 후 선택 가능 검색 txt 내용 작성하면 onclik 버튼으로 search1 함수 호출  전달방식은 GET 방식으로 자기 php(board_list.php) 에 전달하도록 설정. value 부분에는 꼭 sql 구문에 맞는 필드명들이 들어가야 한다. 그래야 나중에 이 값으로 변수를 저장해 sql 검색 명령어에 제대로 대입시킬 수 있음.
 
-
+```
 <script>
     function search1(){
         if(frm1.search.value){
@@ -219,12 +219,12 @@ option value는 제목 선택으로 고정해놓고 이 후 선택 가능 검색
     }
 </script>
 </body>
-
+```
 body 윗부분에 함수를 작성해준다. 만약 input 박스에 값이 없다면 원래 주소로 위치하고 있다면 값을 전송해준다.
 전송된 값은 바로 윗 부분 mysql db와 연동된다.
 
                                               <구현된 검색창>
-
+```
     if(isset($_GET['search'])){
                     $sel=$_GET['kind'];
                     $search=$_GET['search'];
@@ -236,7 +236,7 @@ body 윗부분에 함수를 작성해준다. 만약 input 박스에 값이 없�
     $sql = "select * from board order by num desc";
     $result = mysqli_query($con, $sql);
 }
-
+```
 기존 sql 코드에 이 구문만 추가해준다. 만약 검색창에 값이 입력되어있다면 함수가 정상적으로 작동하고 값을 전달해줄 것이다. 전달된 값을 get으로 받고 isset 함수로 이것이 있다는 게 확인된다면 각자 변수들을 만들어 제목 글쓴이 내용 란의 select value 값을 sel 변수에 저장하고 종류별로 텍스트 내용을 search 변수에 저장한다. 그리고 select 조건문을 사용해 그 검색종류란에 맞는 필드별로 search 내용이 포함된 결과를 num 기준으로 내림차순으로 정렬한다
 만약 search 값이 전달되지 않는다면 기존 코드 그대로 select 문을 수행한다.
 
@@ -251,7 +251,7 @@ body 윗부분에 함수를 작성해준다. 만약 input 박스에 값이 없�
 
 
 3. 댓글기능 구현
-
+```
 create table comment (
    id char(15) not null,
    name char(10) not null,
@@ -259,7 +259,8 @@ create table comment (
    regist_day char(20) not null,
    sel int(11)
 );
-
+```
+```
 	<form method="post" name="comment_form" id="comment_form"  action="comment_insert.php" > 
              <ul id="comment_form">
                 	<li id="text_area">	
@@ -278,9 +279,9 @@ create table comment (
 				 <button type="button" onclick="check_input()">댓글쓰기</button></li>
             </ul>
         </form>
-      
+      ```
 댓글을 입력받고 전달하는 댓글 창 코드이다. post 방식으로 comment_insert.php 부분에 전달해준다.  <board_view.php> 밑 부분에 작성해준다. form 문 안에서 a href 로 변수들을 여러개 동시에 전달하는 것은 무슨 이유에서인지 안 되는 것 같다. input value로 전달해주다. 
-
+```
 <script>
   function check_input() {
       if (!document.comment_form.comment.value)
@@ -292,14 +293,14 @@ create table comment (
       document.comment_form.submit();
    }
 </script>
-
+```
 
 댓글쓰기 버튼을 클릭했을 때 comment 값이 입력되어 있지 않는다면 경고를 울리고 돌아가도록 설정하고 아니면 원래 action에 “comment_insert.php" 로 전송기능을 하는 함수이다. 
 
 <comment_insert.php>
 
 comment_insert.php는 기존 board_insert와 거의 유사하게 작성하였다. 다음 코드는 comment_insert 파일로 데이터를 저장하기 위한 코드이다. 
-
+```
 <meta charset="utf-8">
 <?php
     session_start();
@@ -369,13 +370,13 @@ comment_insert.php는 기존 board_insert와 거의 유사하게 작성하였다
 	   </script>
 	";
 ?>
- 
+``` 
 추가한 코드 설명은 주석에 있다. 짤막하게 설명하자면 여기서 댓글 입력받아서 보낸 변수 comment, num, page를 받고 comment와 num 변수는 sql comment 테이블 comment, sel필드로 삽입한다. page 변수는 나중에 명령을 수행하고 board_view 로 다시 돌아올 때 오류가 생기지 않도록 필요하고 new_total 변수도 만들어 board 테이블의 total 필드(댓글 수) 값을 하나씩 증가하도록 시킨다. 조건문은 당연히 같은 게시글 num과 일치하는지의 여부이다.
 
 
 
 
-
+```
 <board_view.php>
 
 <?php
@@ -413,7 +414,7 @@ comment_insert.php는 기존 board_insert와 거의 유사하게 작성하였다
   
 ?>
 </ul>
-
+```
 댓글 테이블에서 정보들을 가져와 댓글목록을 뽑아내는 코드이다. 위에 먼저 연결한 sql을 끊어야 오류가 안 생김. 
 
 
@@ -429,7 +430,7 @@ comment_insert.php는 기존 board_insert와 거의 유사하게 작성하였다
 먼저 board_list2.php 파일을 만든다. 만드는 양식은 기존 board_list.php 와 거의 유사하고 하이퍼링크만 다르며 둘은 같은 데이터테이블을 공유하기 때문에 board_list.php 추가 구문 설명만 하고 따로 설명을 하지는 않겠다. 일단 글쓰기 양식 board_form.php 문을 수정해보았다.
 
 <board_form.php>
-
+```
 
 <li>														<tr>														<td class="right" width=100 nowrap> <font class='pt7'>게시판 카테고리 :  </font> </td>
 					<td class='pt7' style="text-align:left;">										<select id=category name=catt> <option value=1>리뷰</option><option value=2>건의</option></select>	 													</td>
@@ -444,13 +445,13 @@ comment_insert.php는 기존 board_insert와 거의 유사하게 작성하였다
 					</td>
 				</tr>
 			</li>
-
+```
 보시다시피 form 문 안에 변수 전달하는 영역을 두 개 만들었다.
 하나는 sel 변수로 전달할 것이고 하나는 cat 변수로 전달해 subject 와 합칠 것이다.
 
 
 <board_insert.php>
-
+```
 $catt = $_POST["catt"]; //게시판 분류에 필요
     $subject = $_POST["subject"];
     $content = $_POST["content"];
@@ -474,14 +475,14 @@ echo "
 
 	   </script>
 	";
-
+```
 
 기존 코드에 따로 추가한 구문들이다. 보면 알다시피 문자열 cat 변수는 subject와 함쳐져 제목에 나타날 것이고 게시판 분류에 필요한 1이나 2인 catt 변수는 catagory로 전달될 것이다.  댓글 total에는 0을 입력한다. 만약 catt 값이 1이라면 기존 board_list(리뷰게시판) 아니면 board_list2(건의 게시판)으로 이동할 것이다. 
 
 5. 댓글 총 수 구현
 
 <board_list.php>
-
+```
   if(isset($_GET['search'])){ //검색바이다 주어진 변수가 있다면 받은 값들로 새변수들을 만들고 sql 검색해보자
                     $sel=$_GET['kind'];
                     $search=$_GET['search'];
@@ -499,12 +500,12 @@ echo "
 $total       = $row["total"]; 
 
              <span class="col2"><a href="board_view.php?num=<?=$num?>&page=<?=$page?>"><?=$subject?> [<?=$total?>] </a></span> 
-
+```
 앞서 설명한 코드들이다. 글쓰기에서 완료한 category 변수를 기준으로 board 테이블의 데이터 목록을 뽑아낸다는 것을 알 수 있다. 새로 total (댓글 총수) 변수도 뽑아내고 제목 옆에 알 수 있도록 나타내어준다.
 
 
 <board_view.php>
-
+```
 $category     = $row["catagory"];
 
 	if($category==1) //추가한 거 위의 h3 과 연결
@@ -534,9 +535,10 @@ $category     = $row["catagory"];
                 </li>
 
 
-
+```
 최근 게시글 항목을 보여주는 main.php 항목에는 하이퍼링크와 댓글 총수도 같이 출력나오도록 설정해준다
 아래는 작업한 css 파일이다.
+```
 <common.css>
 #main_img_bar img { height: 230px; text-align: center; margin-top: 0px;  width: 1400px; }
 #main_img_bar2 img { height: 230px; text-align: center; margin-top: 0px;  width: 1422px; }
@@ -558,7 +560,7 @@ $category     = $row["catagory"];
 #comment_form #text_area .col1 { position: absolute; top: 10px; }
 #comment_form #text_area .col2 { position: absolute; left: 140px; }
 #list li { padding: 0px 0; border-bottom: solid 1px #dddddd; }
-
+```
 
 <추가>
 현재 시각을 한국 기준으로 설정하려 data 함수를 바꿈 date.timezone Asia/Seoul로 바꿈
